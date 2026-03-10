@@ -1,4 +1,6 @@
 import { initDB, saveTicker, getTickers } from './db/rxdb-setup.js';
+import { connectWallet, disconnectWallet } from './wallet/wagmi-setup.js';
+import {connectWebSocket} from "./api/upbit-ws";
 
 window.addEventListener('load', async () => {
     await window.Clerk.load();
@@ -32,4 +34,11 @@ async function showApp(clerk) {
     await saveTicker('KRW-BTC', 130000000);
     await saveTicker('KRW-ETH', 5000000);
     await getTickers();
+
+    document.getElementById('wallet-connect-btn').onclick = connectWallet;
+    document.getElementById('wallet-disconnect-btn').onclick = disconnectWallet;
+
+    connectWebSocket(['KRW-BTC', 'KRW-ETH'], (data) => {
+        console.log(`📡 ${data.code}: ${data.trade_price?.toLocaleString()}원`);
+    });
 }
