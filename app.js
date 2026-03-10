@@ -1,3 +1,5 @@
+import { initDB, saveTicker, getTickers } from './db/rxdb-setup.js';
+
 window.addEventListener('load', async () => {
     await window.Clerk.load();
     const clerk = window.Clerk;
@@ -12,7 +14,7 @@ window.addEventListener('load', async () => {
     }
 });
 
-function showApp(clerk) {
+async function showApp(clerk) {
     document.getElementById('auth').style.display = 'none';
     document.getElementById('app').style.display = 'block';
 
@@ -23,5 +25,11 @@ function showApp(clerk) {
         clerk.signOut().then(() => location.reload());
     };
 
-    console.log('✅ Clerk 로그인 성공', clerk.user);
+    // ✅ RxDB 초기화
+    await initDB();
+
+    // 테스트: 더미 데이터 저장 후 조회
+    await saveTicker('KRW-BTC', 130000000);
+    await saveTicker('KRW-ETH', 5000000);
+    await getTickers();
 }
