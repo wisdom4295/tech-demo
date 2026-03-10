@@ -37,7 +37,7 @@ text
 
 **해결**  
 Publishable Key를 Base64 디코딩 → 본인 Clerk 도메인 추출:
-pk_test_cHJvYmFibGUta2l0dGVuLTMyLmNsZXJrLmFjY291bnRzLmRldiQ
+pk_my_key
 → probable-kitten-32.clerk.accounts.dev
 
 text
