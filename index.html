@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tech Demo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+<div id="auth">
+    <h2>🔐 Tech Demo</h2>
+    <div id="sign-in"></div>
+</div>
+
+<div id="app" style="display:none">
+    <h2>✅ Tech Demo</h2>
+    <p id="user-info"></p>
+    <button id="sign-out-btn">로그아웃</button>
+    <hr/>
+    <p id="db-status">RxDB: ⏳ 대기중</p>
+    <p id="wallet-status">Wallet: ⏳ 대기중</p>
+    <p id="ws-status">WebSocket: ⏳ 대기중</p>
+</div>
+
+<script>
+    window.__clerk_frontend_api = 'probable-kitten-32.clerk.accounts.dev';
+</script>
+<script
+        async
+        crossorigin="anonymous"
+        data-clerk-publishable-key="pk_test_cHJvYmFibGUta2l0dGVuLTMyLmNsZXJrLmFjY291bnRzLmRldiQ"
+        src="https://probable-kitten-32.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
