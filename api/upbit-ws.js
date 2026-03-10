@@ -1,15 +1,15 @@
-export function connectWebSocket(codes, onMessage){
+export function connectWebSocket(codes, onMessage, onStatusChange) {
     const ws = new WebSocket('wss://api.upbit.com/websocket/v1');
     ws.binaryType = 'arraybuffer';
 
-    ws.onopen = () =>{
+    ws.onopen = () => {
         console.log('✅ WebSocket 연결됨');
-        document.getElementById('ws-status').textContent = 'WebSocket: ✅ 연결됨';
+        onStatusChange?.('connected'); // ← DOM 대신 콜백
         ws.send(JSON.stringify([
-            {ticket:crypto.randomUUID()},
-            {type:'ticker', codes}
-        ]))
-    }
+            { ticket: crypto.randomUUID() },
+            { type: 'ticker', codes }
+        ]));
+    };
 
     ws.onmessage = (evt) => {
         const decoder = new TextDecoder('utf-8');
@@ -20,12 +20,12 @@ export function connectWebSocket(codes, onMessage){
 
     ws.onerror = (err) => {
         console.error('❌ WebSocket 에러:', err);
-        document.getElementById('ws-status').textContent = 'WebSocket: ❌ 에러';
+        onStatusChange?.('error');
     };
 
     ws.onclose = () => {
         console.log('🔌 WebSocket 종료');
-        document.getElementById('ws-status').textContent = 'WebSocket: 🔌 종료';
+        onStatusChange?.('closed');
     };
 
     return ws;

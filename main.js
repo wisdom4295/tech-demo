@@ -1,24 +1,34 @@
-const {app, BrowserWindow} = require('electron');
+const { app, BrowserWindow, session } = require('electron'); // ✅ session 추가
 const path = require('path');
 
-function createWindow(){
+function createWindow() {
     const win = new BrowserWindow({
-        width:1024,
-        height:768,
-        webPreferences:{
-            nodeIntegration:false,
-            contextIsolation:true,
+        width: 1024,
+        height: 768,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            webSecurity: false // ✅ 외부 CDN 허용
         }
-    })
-    // 개발: Vite 로컬 서버
-    win.loadURL('http://localhost:5173');
+    });
 
-    // 배포: 빌드된 파일
-    // win.loadFile(path.join(__dirname, 'dist/index.html'));
+    win.loadURL('http://localhost:5173');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    // ✅ CSP 헤더 제거
+    session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+        callback({
+            responseHeaders: {
+                ...details.responseHeaders,
+                'Content-Security-Policy': ['']
+            }
+        });
+    });
 
-app.on('window-all-closed', () =>{
-    if(process.platform !== 'darwin') app.quit();
-})
+    createWindow();
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});

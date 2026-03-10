@@ -9,3 +9,20 @@ button {
     cursor: pointer;
 }
 hr { margin: 20px 0; }
+
+#log-panel {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 12px;
+    border-radius: 8px;
+    height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.log-line {
+    white-space: pre;
+}

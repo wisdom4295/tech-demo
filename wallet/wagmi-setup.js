@@ -2,36 +2,27 @@ import { createConfig, connect, disconnect, getAccount, injected } from '@wagmi/
 import { mainnet } from '@wagmi/core/chains';
 import { http } from 'viem';
 
+const injectedConnector = injected(); // ✅ 한 번만 생성
+
 const config = createConfig({
     chains: [mainnet],
-    connectors: [injected()],
+    connectors: [injectedConnector],
     transports: {
         [mainnet.id]: http(),
     },
 });
 
 export async function connectWallet() {
-    try {
-        const result = await connect(config, { connector: injected() });
-        console.log('✅ 지갑 연결:', result.accounts[0]);
-        document.getElementById('wallet-status').textContent =
-            `Wallet: ✅ ${result.accounts[0].slice(0, 6)}...${result.accounts[0].slice(-4)}`;
-        return result;
-    } catch (err) {
-        console.error('❌ 지갑 연결 실패:', err.message);
-        document.getElementById('wallet-status').textContent =
-            `Wallet: ❌ ${err.message}`;
-    }
+    const result = await connect(config, { connector: injectedConnector });
+    console.log('✅ 지갑 연결:', result.accounts[0]);
+    return result; // ← 결과만 반환, DOM 없음
 }
 
 export async function disconnectWallet() {
     await disconnect(config);
-    document.getElementById('wallet-status').textContent = 'Wallet: 🔌 연결 해제';
     console.log('🔌 지갑 연결 해제');
 }
 
 export function getWalletAccount() {
-    const account = getAccount(config);
-    console.log('👛 현재 지갑:', account);
-    return account;
+    return getAccount(config);
 }
