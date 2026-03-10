@@ -1,4 +1,4 @@
-# 🛠 Tech Demo
+# 🛠 upbit-wallet-trader
 
 > 환경: Vite + 순수 JS (No React)  
 > 기술 스택: Clerk · RxDB · wagmi · Upbit WebSocket
