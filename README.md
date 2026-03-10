@@ -63,3 +63,38 @@ text
 추후 기록 예정
 
 </details> ```
+
+
+<details>
+<summary>wagmi</summary>
+
+### injected는 @wagmi/core 안에 포함되어 있음
+
+**원인**  
+`injected` 를 별도 패키지에서 가져올 필요 없이  
+`@wagmi/core` 에 이미 포함되어 있음
+
+**해결**
+```js
+// ❌ 틀림
+import { injected } from '@wagmi/connectors';
+
+// ✅ 수정
+import { createConfig, connect, disconnect, getAccount, injected } from '@wagmi/core';
+transports 빈 객체 사용 불가
+원인
+체인별 전송 설정 없이 빈 객체로 두면 동작 안 함
+
+해결
+
+js
+import { http } from 'viem';
+
+// ❌ 틀림
+transports: {}
+
+// ✅ 수정
+transports: {
+  [mainnet.id]: http(),
+}
+</details> ```
