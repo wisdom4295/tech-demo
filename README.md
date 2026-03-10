@@ -53,13 +53,56 @@ text
   data-clerk-publishable-key="pk_test_YOUR_KEY"
   src="https://probable-kitten-32.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
 ></script>
-</details> <details> <summary>RxDB</summary>
-추후 기록 예정
-
+```
 </details> <details> <summary>wagmi</summary>
-추후 기록 예정
+injected는 @wagmi/core 안에 포함되어 있음
+원인
+injected를 별도 패키지에서 가져올 필요 없이
+@wagmi/core에 이미 포함되어 있음
 
+해결
+```html
+// ❌ 틀림
+import { injected } from '@wagmi/connectors';
+
+// ✅ 수정
+import { createConfig, connect, disconnect, getAccount, injected } from '@wagmi/core';
+```
+
+transports 빈 객체 사용 불가
+```html
+원인
+체인별 전송 설정 없이 빈 객체로 두면 동작 안 함
+
+해결
+import { http } from 'viem';
+
+// ❌ 틀림
+transports: {}
+
+// ✅ 수정
+transports: {
+  [mainnet.id]: http(),
+}
+```
 </details> <details> <summary>Upbit WebSocket</summary>
-추후 기록 예정
+### 문제 1: TextDecoder 인스턴스 생성 누락
 
-</details> ```
+**에러 메시지**
+Uncaught TypeError: TextDecoder.decode is not a constructor
+
+text
+
+**원인**  
+`TextDecoder` 는 클래스라 `new` 로 인스턴스 생성 후 `.decode()` 호출해야 함
+
+**해결**
+```js
+// ❌ 틀림
+const data = JSON.parse(new TextDecoder().decode(evt.data));
+
+// ✅ 수정
+const decoder = new TextDecoder('utf-8');
+const data = JSON.parse(decoder.decode(evt.data));
+```
+</details> 
