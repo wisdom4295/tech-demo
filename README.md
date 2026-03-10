@@ -40,29 +40,6 @@ Publishable Key를 Base64 디코딩 → 본인 Clerk 도메인 추출:
 pk_my_key
 → probable-kitten-32.clerk.accounts.dev
 
-text
-
-```html
-<!-- ❌ jsdelivr (UI 없음) -->
-<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
-
-<!-- ✅ 본인 Clerk 도메인 CDN (UI 포함) -->
-<script
-  async
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_test_YOUR_KEY"
-  src="https://probable-kitten-32.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-></script>
-</details> <details> <summary>RxDB</summary>
-추후 기록 예정
-
-</details> <details> <summary>wagmi</summary>
-추후 기록 예정
-
-</details> <details> <summary>Upbit WebSocket</summary>
-추후 기록 예정
-
-</details> ```
 
 
 <details>
@@ -97,4 +74,29 @@ transports: {}
 transports: {
   [mainnet.id]: http(),
 }
+</details> ```
+
+
+text
+
+```html
+<!-- ❌ jsdelivr (UI 없음) -->
+<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+
+<!-- ✅ 본인 Clerk 도메인 CDN (UI 포함) -->
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_YOUR_KEY"
+  src="https://probable-kitten-32.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+</details> <details> <summary>RxDB</summary>
+추후 기록 예정
+
+</details> <details> <summary>wagmi</summary>
+추후 기록 예정
+
+</details> <details> <summary>Upbit WebSocket</summary>
+추후 기록 예정
+
 </details> ```
