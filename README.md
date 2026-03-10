@@ -86,6 +86,23 @@ transports: {
 }
 ```
 </details> <details> <summary>Upbit WebSocket</summary>
-추후 기록 예정
+### 문제 1: TextDecoder 인스턴스 생성 누락
 
+**에러 메시지**
+Uncaught TypeError: TextDecoder.decode is not a constructor
+
+text
+
+**원인**  
+`TextDecoder` 는 클래스라 `new` 로 인스턴스 생성 후 `.decode()` 호출해야 함
+
+**해결**
+```js
+// ❌ 틀림
+const data = JSON.parse(new TextDecoder().decode(evt.data));
+
+// ✅ 수정
+const decoder = new TextDecoder('utf-8');
+const data = JSON.parse(decoder.decode(evt.data));
+```
 </details> 
